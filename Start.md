@@ -1,11 +1,13 @@
 ---
 created: 2021-01-20T14:38:23+01:00
-modified: 2021-01-22T20:38:53+01:00
+modified: 2021-01-22T22:20:12+01:00
 ---
 
 # Start
 
 # Introduction
+
+Hi, this document is intended to help Meese and ASIX students.
 
 ## What is a docker?
 
@@ -119,9 +121,22 @@ That's why at the moment, there is no container in the container list.
        Now that we are connected to the terminal we could execute commands inside the docker.
 This is useful to explore the default files of someone Docker Images.
 
-       $ docker container exec -it $DOCKERID ls /
-
        Still, we can execute other commands without get attached.
 
+       $ docker container exec -it $DOCKERID ls /
 
-# docker-composeacabo de acabar clase por lo que me to ca # docker stack
+### Nginx example (web server service)
+
+      $ docker run --name desired-container-name -d -p 8080:80 nginx
+
+       -p: Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 8080 from the nginx container, and placing it in our port 80, to test if it works you can open http://localhost:80 or http://localhost.
+
+       --name: Let's us setup a custom docker container image.
+
+       In this case we don't need to use -t to avoid the container from closing since the service itself will prevent it from closing while it works correctly.
+
+
+
+# docker-compose
+
+# docker stacks
