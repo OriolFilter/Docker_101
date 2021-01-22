@@ -1,6 +1,6 @@
 ---
 created: 2021-01-20T14:38:23+01:00
-modified: 2021-01-20T15:13:24+01:00
+modified: 2021-01-22T20:11:55+01:00
 ---
 
 # Start
@@ -77,6 +77,8 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
     <package> <function> <docker image from docker.hub>:<version from the image> <command> 
 
-# docker-compose
+     Here we are starting a virtual Ubuntu, with the latest version aviable at Docker Hub,  and executing the command "ls /"
 
-# docker stack
+
+
+# docker-composeacabo de acabar clase por lo que me to ca # docker stack
