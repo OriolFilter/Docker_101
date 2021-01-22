@@ -1,6 +1,6 @@
 ---
 created: 2021-01-20T14:38:23+01:00
-modified: 2021-01-22T22:20:12+01:00
+modified: 2021-01-22T22:45:29+01:00
 ---
 
 # Start
@@ -135,8 +135,41 @@ This is useful to explore the default files of someone Docker Images.
 
        In this case we don't need to use -t to avoid the container from closing since the service itself will prevent it from closing while it works correctly.
 
+### Nginx example but with custom files
 
+        This time we will use a custom index.html file, instead of the nginx default one.
+
+        First step is to create the file and it's content, we are okay with a simple one.
+
+         printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> index.html
+
+         Now it's time to run the docker container with our custom file.
+
+        $ docker run --name desired-container-name -d -p 8080:80 -v index.html:/var/www/html/index.html:ro nginx
+
+        Now, if we check our webpage again, we can see our new message.
+
+        We can also share a entire folder.
+
+        $ docker run --name desired-container-name -d -p 8080:80 -v folder_path:/var/www/html/:ro nginx
+
+         -v: Lets us substitude a folder or a file in our docker container by the folder or file specified, we can also use virtual volumes in case we created them.
 
 # docker-compose
 
 # docker stacks
+
+# other things to keep in mind
+
+## docker build
+
+## docker pull
+
+## docker push
+
+## Docker file
+
+## docker volume && docker mount
+
+
+         https://docs.docker.com/storage/volumes/
