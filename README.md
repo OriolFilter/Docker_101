@@ -1,5 +1,5 @@
 ---
-modified: 2021-01-22T23:03:57+01:00
+modified: 2021-01-22T23:08:05+01:00
 ---
 
 # Docker_ASIX
@@ -34,7 +34,7 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 # How to start
 
-## Docker instalation
+## Docker installation
 
 ### apt
 
