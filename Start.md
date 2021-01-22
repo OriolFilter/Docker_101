@@ -1,6 +1,6 @@
 ---
 created: 2021-01-20T14:38:23+01:00
-modified: 2021-01-22T22:45:29+01:00
+modified: 2021-01-22T22:46:13+01:00
 ---
 
 # Start
@@ -173,3 +173,10 @@ This is useful to explore the default files of someone Docker Images.
 
 
          https://docs.docker.com/storage/volumes/
+
+
+
+# Credits
+
+- Oriol Filter
+- Internet
