@@ -1,12 +1,12 @@
 ---
-modified: 2021-01-22T22:52:54+01:00
+modified: 2021-01-22T23:03:57+01:00
 ---
 
 # Docker_ASIX
 
 # Introduction
 
-Hi, this document is intended to help Meese and ASIX students.
+Hi, this document is intended to help M**se and ASIX students.
 
 ## What is a docker?
 
