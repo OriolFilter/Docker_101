@@ -1,6 +1,6 @@
 ---
 created: 2021-01-20T14:38:23+01:00
-modified: 2021-01-22T20:11:55+01:00
+modified: 2021-01-22T20:38:53+01:00
 ---
 
 # Start
@@ -73,12 +73,55 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 ### Explanation
 
+
+     $ docker run ubuntu:latest ls /
     <docker> <run> <ubuntu>:<latest> <ls />
 
     <package> <function> <docker image from docker.hub>:<version from the image> <command> 
 
      Here we are starting a virtual Ubuntu, with the latest version aviable at Docker Hub,  and executing the command "ls /"
 
+### View active dockers
+
+      $ docker container ls
+
+      Will return a list of active dockers, and some information about it.
+By default if the Docker don't have nothing to keep it busy it will shutdown by himself, what does it mean? If you used the first "docker run" example, after executing the command given it shutdown.
+That's why at the moment, there is no container in the container list.
+
+
+### Avoid docker from shutting down
+
+       $ docker run ubuntu -t -d
+
+
+       By default, if you don't specify the docker version it will try to use the one that you have alredy downloaded in your machine, if can't find it in your machine will proceed to download the latst version.
+
+       -d: Dettach from the terminal, this way you can keep working with the terminal and close it if necessary, if you don't understand it we can say it sends the docker to the background.
+
+        -t: Prevents the Docker from shutting down once has no labors left.
+
+### Connect to running docker
+
+
+         First step is to get the Docker container id
+
+         $ docker container ls
+
+         Once we have the id we have to run the next command.
+
+         $ docker container exec -it $DOCKERID bash
+
+         We use bash to attach our terminal to the container one, but some systems might not have "bash", instead of bash we can use "sh".
+
+       $ docker container exec -it $DOCKERID sh
+
+       Now that we are connected to the terminal we could execute commands inside the docker.
+This is useful to explore the default files of someone Docker Images.
+
+       $ docker container exec -it $DOCKERID ls /
+
+       Still, we can execute other commands without get attached.
 
 
 # docker-composeacabo de acabar clase por lo que me to ca # docker stack
