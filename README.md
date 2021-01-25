@@ -1,5 +1,5 @@
 ---
-modified: 2021-01-22T23:08:05+01:00
+modified: 2021-01-25T14:52:07+01:00
 ---
 
 # Docker_ASIX
@@ -70,7 +70,7 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 ## First example
 
-    docker run ubuntu:latest ls /
+    $ docker run ubuntu:latest ls /
 
 ### Explanation
 
@@ -153,6 +153,31 @@ This is useful to explore the default files of someone Docker Images.
         $ docker run --name desired-container-name -d -p 8080:80 -v folder_path:/var/www/html/:ro nginx
 
          -v: Lets us substitude a folder or a file in our docker container by the folder or file specified, we can also use virtual volumes in case we created them.
+
+### Ubuntu with shared folders
+
+
+     $ docker run -t -v ./newfolder:/shared:rw  ubuntu:latest
+
+     Now we need to get the Docker container id so we can connect to the container.
+
+     $ docker container ls
+
+     Once we find the Docker id we need to connect to the container and attach the terminal
+
+
+     $ docker container exec -it $CONTAINER_ID bash
+
+     Now that we are connected to the container, it's time to create a file in "/shared" 
+
+     $ prtintf "Hi, file created from Docker container!" > /shared/.newfile
+
+     Once the file is created just left exit the container and check our new folder.
+
+     $ exit
+     $ ls ./newfolder
+     $ cat ./newfolder/.newfile
+
 
 # docker-compose
 
