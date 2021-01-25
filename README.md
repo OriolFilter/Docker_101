@@ -42,6 +42,8 @@ Also, since they are isolated virtual machines, in case someone was able to reac
     sudo apt-get update
     sudo apt-get insall docker #?? check
 
+Debian/Ubuntu repositories tends to be older versions (2-3 years old) but with ensured stability.
+
 ### pacman
 
     sudo pacman -Ssy
@@ -145,11 +147,12 @@ Once the container is stopped, we can proceed to remove it.
 
     $ docker run --name desired-container-name -d -p 8080:80 nginx
 
-    -p: <our_port:docker_port>  Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 80 from the nginx container, and placing it in our port 8080, to test if it works you can open http://localhost:80 or http://localhost.
+    -p: <our_port:docker_port>  Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 80 from the nginx container, and placing it in our port 8080.
 
     --name: Let's us setup a custom docker container image.
 
-In this case we don't need to use -t to avoid the container from closing since the service itself will prevent it from closing while it works correctly.
+In this case we don't need to use -t to avoid the container from closing since the service itself will prevent it from closing while it works correctly.\
+To test if it works you can open http://localhost:80 or http://localhost.
 
 ### Nginx example but with custom files
 
@@ -210,7 +213,7 @@ As we can see, we didn't need to create the folder to share it, docker create it
 
 ## docker-compose first example (php apache web)
 
-First step is to create the file "docker-compose.yml"
+First step is to create the file "docker-compose.yml" (the file can use ".yaml" instead of ".yml")
 
     $ touch ./docker-compose.yml
 
@@ -223,7 +226,8 @@ services:
   web:
     image: php:7.0-apache
     ports:
-      - 8080:80
+      - target: 80
+        published: 8080 # This time we decide to publish port 8080
     volumes:
       - ./demo.php:/var/www/html/index.php:ro
 ```
@@ -239,12 +243,70 @@ phpinfo();
 
 Once we have the files created, we can proceed to start the docker-container.
 
-    $ docker-container up
+    $ docker-compose up
 
 To stop it we can simply press control+C
 
-
 [comment]: <> (checked till here.)
+
+## docker-compose tags
+
+    version: which version of docker-compose use. I don't really understand how it works at all, so i guess the later the better, I think it takes as a integer, so if you use 3.9 it will save it as 3, instead of a float 3.9, this field is optional since docker-composer version 1.27.0
+
+https://docs.docker.com/compose/compose-file/
+
+    services: list of services to create, the service name isn't intended to be the service name or the docker name, you can place the name that helps you idenftify the service.
+
+      service_name: As said previously, this name is field to be custom, in the example shown before we call it "web".
+
+### service tags
+
+
+## docker-compose documentation 
+
+https://docs.docker.com/compose/compose-file/compose-file-v3/
+
+        image: # docker-container-image:version
+
+        build: # In case we want to use a docker file instead of a docker from dockerhub, docker file will be adressed later
+
+          context: Directory where docker file is located (with respect of the location from the user executing the file)
+
+          build: File name, in case the file is called "dockerfile" we can use a dot '.', otherwise we will use './dockerfile'.
+
+        ports: # Ports to publish with from the docker
+           - 80:8080
+          # - "docker port:published port"
+
+          # - docker port:published
+
+          # - target: docker port
+          #      published: published port
+          #  protocol: tpc/udp # Optional, only select one tcp or udp, by default it will choose tcp
+          #  mode: host # Optional
+
+        restart: on-failure # restart policy, what to do once container stops working, this option is ignored on swarm mode.
+        # restart: "no"
+        # restart: always
+        # restart: on-failure
+        # restart: unless-stopped
+        # network_mode: host
+
+        volumes: # Volumes to share with the docker
+         # - type: volume  # this works for virtualy created docker volumes
+         #   source: mycreatedvolume
+         #   target: /data
+         #   read_only: true # Sets the volume as read only
+         #   volume:
+         #     nocopy: true
+
+          - type: bind
+            source: ./demo.php
+            target: /var/www/html/index.php:ro
+
+          # - ./demo.php:/var/www/html/index.php:ro # This is the simple way 
+
+To test if it works you can open http://localhost:8080.
 
 
 # docker stacks
@@ -262,7 +324,6 @@ To stop it we can simply press control+C
 ## .env file
 
 ## docker volume && docker mount
-
 
          https://docs.docker.com/storage/volumes/
 
