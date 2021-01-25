@@ -40,7 +40,7 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 ### apt
 
     sudo apt-get update
-    sudo apt-get insall docker #?? check
+    sudo apt-get install docker #?? check
 
 Debian/Ubuntu repositories tends to be older versions (2-3 years old) but with ensured stability.
 
@@ -259,13 +259,6 @@ https://docs.docker.com/compose/compose-file/
 
       service_name: As said previously, this name is field to be custom, in the example shown before we call it "web".
 
-### service tags
-
-
-## docker-compose documentation 
-
-https://docs.docker.com/compose/compose-file/compose-file-v3/
-
         image: # docker-container-image:version
 
         build: # In case we want to use a docker file instead of a docker from dockerhub, docker file will be adressed later
@@ -308,6 +301,10 @@ https://docs.docker.com/compose/compose-file/compose-file-v3/
           # - ./demo.php:/var/www/html/index.php:ro # This is the simple way 
 
 To test if it works you can open http://localhost:8080.
+
+## docker-compose documentation
+
+https://docs.docker.com/compose/compose-file/compose-file-v3/
 
 
 # docker stacks
