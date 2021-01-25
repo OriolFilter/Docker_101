@@ -275,15 +275,14 @@ https://docs.docker.com/compose/compose-file/compose-file-v3/
           build: File name, in case the file is called "dockerfile" we can use a dot '.', otherwise we will use './dockerfile'.
 
         ports: # Ports to publish with from the docker
-           - 80:8080
-          # - "docker port:published port"
+          
+          # - docker_port:published_port 
+          # - "docker_port:published_port"
 
-          # - docker port:published
-
-          # - target: docker port
-          #      published: published port
-          #  protocol: tpc/udp # Optional, only select one tcp or udp, by default it will choose tcp
-          #  mode: host # Optional
+           - target: 80 # docker port
+             published: 8080 # published port
+             protocol: tcp # tpc/udp # Optional, only select one tcp or udp, by default it will choose tcp
+             # mode: host # Optional
 
         restart: on-failure # restart policy, what to do once container stops working, this option is ignored on swarm mode.
         # restart: "no"
@@ -301,7 +300,7 @@ https://docs.docker.com/compose/compose-file/compose-file-v3/
          #   volume:
          #     nocopy: true
 
-          - type: bind # instead of using a created volume it uses a folder of our system. 
+          - type: bind # instead of using a created volume it uses a folder or file in our system. 
             source: ./demo.php
             target: /var/www/html/index.php
             read_only: true
