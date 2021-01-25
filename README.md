@@ -1,4 +1,5 @@
 ---
+created: 2021-01-20T14:38:23+01:00\
 modified: 2021-01-25T15:41:56+01:00
 ---
 
@@ -52,19 +53,19 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 ## Start docker service
 
-    To start using dockers you need to start the service (unless it's alredy running) 
+To start using dockers you need to start the service (unless it's alredy running) 
 
 ### Service (Debian based distros)
 
     sudo service docker start
 
-### Systemctl (Debian based distros)
+### Systemctl (Arch based distros)
 
     sudo systemctl start docker
 
 ## Enable docker service
 
-    You can enable the service instead of start it, so it starts on boot, but not required
+You can enable the service instead of start it, so it starts on boot, but not required
 
 # docker run
 
@@ -75,108 +76,110 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 ### Explanation
 
 
-     $ docker run ubuntu:latest ls /
+
+    $ docker run ubuntu:latest ls /
     <docker> <run> <ubuntu>:<latest> <ls />
 
     <package> <function> <docker image from docker.hub>:<version from the image> <command> 
 
-     Here we are starting a virtual Ubuntu, with the latest version aviable at Docker Hub,  and executing the command "ls /"
+Here we are starting a virtual Ubuntu, with the latest version aviable at Docker Hub,  and executing the command "ls /"
 
 ### View active dockers
 
       $ docker container ls
 
-      Will return a list of active dockers, and some information about it.
+Will return a list of active dockers, and some information about it.
+
 By default if the Docker don't have nothing to keep it busy it will shutdown by himself, what does it mean? If you used the first "docker run" example, after executing the command given it shutdown.
+
 That's why at the moment, there is no container in the container list.
 
 
 ### Avoid docker from shutting down
 
-       $ docker run ubuntu -t -d
+    $ docker run ubuntu -t -d
 
 
-       By default, if you don't specify the docker version it will try to use the one that you have alredy downloaded in your machine, if can't find it in your machine will proceed to download the latst version.
+By default, if you don't specify the docker version it will try to use the one that you have alredy downloaded in your machine, if can't find it in your machine will proceed to download the latst version.
 
-       -d: Dettach from the terminal, this way you can keep working with the terminal and close it if necessary, if you don't understand it we can say it sends the docker to the background.
+    -d: Dettach from the terminal, this way you can keep working with the terminal and close it if necessary, if you don't understand it we can say it sends the docker to the background.
 
-        -t: Prevents the Docker from shutting down once has no labors left.
+    -t: Prevents the Docker from shutting down once has no labors left.
 
 ### Connect to running docker
 
 
-         First step is to get the Docker container id
+First step is to get the Docker container id
 
-         $ docker container ls
+    $ docker container ls
 
-         Once we have the id we have to run the next command.
+Once we have the id we have to run the next command.
 
-         $ docker container exec -it $DOCKERID bash
+    $ docker container exec -it $DOCKERID bash
 
-         We use bash to attach our terminal to the container one, but some systems might not have "bash", instead of bash we can use "sh".
+We use bash to attach our terminal to the container one, but some systems might not have "bash", instead of bash we can use "sh".
 
-       $ docker container exec -it $DOCKERID sh
+    $ docker container exec -it $DOCKERID sh
 
-       Now that we are connected to the terminal we could execute commands inside the docker.
+Now that we are connected to the terminal we could execute commands inside the docker.
 This is useful to explore the default files of someone Docker Images.
 
-       Still, we can execute other commands without get attached.
+Still, we can execute other commands without get attached.
 
        $ docker container exec -it $DOCKERID ls /
 
 ### Nginx example (web server service)
 
-      $ docker run --name desired-container-name -d -p 8080:80 nginx
+    $ docker run --name desired-container-name -d -p 8080:80 nginx
 
-       -p: Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 8080 from the nginx container, and placing it in our port 80, to test if it works you can open http://localhost:80 or http://localhost.
+    -p: Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 8080 from the nginx container, and placing it in our port 80, to test if it works you can open http://localhost:80 or http://localhost.
 
-       --name: Let's us setup a custom docker container image.
+    --name: Let's us setup a custom docker container image.
 
-       In this case we don't need to use -t to avoid the container from closing since the service itself will prevent it from closing while it works correctly.
+In this case we don't need to use -t to avoid the container from closing since the service itself will prevent it from closing while it works correctly.
 
 ### Nginx example but with custom files
 
-        This time we will use a custom index.html file, instead of the nginx default one.
+This time we will use a custom index.html file, instead of the nginx default one.
 
-        First step is to create the file and it's content, we are okay with a simple one.
+First step is to create the file and it's content, we are okay with a simple one.
 
-         printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> index.html
+    printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> index.html
 
-         Now it's time to run the docker container with our custom file.
+Now it's time to run the docker container with our custom file.
 
-        $ docker run --name desired-container-name -d -p 8080:80 -v index.html:/var/www/html/index.html:ro nginx
+    $ docker run --name desired-container-name -d -p 8080:80 -v index.html:/var/www/html/index.html:ro nginx
 
-        Now, if we check our webpage again, we can see our new message.
+Now, if we check our webpage again, we can see our new message.
 
-        We can also share a entire folder.
+We can also share a entire folder.
 
-        $ docker run --name desired-container-name -d -p 8080:80 -v folder_path:/var/www/html/:ro nginx
+    $ docker run --name desired-container-name -d -p 8080:80 -v folder_path:/var/www/html/:ro nginx
 
-         -v: Lets us substitude a folder or a file in our docker container by the folder or file specified, we can also use virtual volumes in case we created them.
+    -v: Lets us substitude a folder or a file in our docker container by the folder or file specified, we can also use virtual volumes in case we created them.
 
 ### Ubuntu with shared folders
 
 
-     $ docker run -t -v ./newfolder:/shared:rw  ubuntu:latest
+    $ docker run -t -v ./newfolder:/shared:rw  ubuntu:latest
 
-     Now we need to get the Docker container id so we can connect to the container.
+Now we need to get the Docker container id so we can connect to the container.
 
-     $ docker container ls
+    $ docker container ls
 
-     Once we find the Docker id we need to connect to the container and attach the terminal
+Once we find the Docker id we need to connect to the container and attach the terminal
 
+    $ docker container exec -it $CONTAINER_ID bash
 
-     $ docker container exec -it $CONTAINER_ID bash
+Now that we are connected to the container, it's time to create a file in "/shared" 
 
-     Now that we are connected to the container, it's time to create a file in "/shared" 
+    $ prtintf "Hi, file created from Docker container!" > /shared/.newfile
 
-     $ prtintf "Hi, file created from Docker container!" > /shared/.newfile
+Once the file is created just left exit the container and check our new folder.
 
-     Once the file is created just left exit the container and check our new folder.
-
-     $ exit
-     $ ls ./newfolder
-     $ cat ./newfolder/.newfile
+    $ exit
+    $ ls ./newfolder
+    $ cat ./newfolder/.newfile
 
 
 # docker-compose
@@ -187,13 +190,14 @@ This is useful to explore the default files of someone Docker Images.
 
 ## docker-compose first example (php apache web)
 
-      First step is to create the file "docker-compose.yml"
+First step is to create the file "docker-compose.yml"
 
-      $ touch ./docker-compose.yml
+    $ touch ./docker-compose.yml
 
-      Once we have the file created we need to insert the next text inside the created file:
+Once we have the file created we need to insert the next text inside the created file:
 
 ```
+#docker-compose.yml
 version: "3.9"
 services:
   web:
@@ -204,12 +208,14 @@ services:
       - ./demo.php:/var/www/index.php
 ```
 
-      Now, it's time to create the file "demo.php"
+Now, it's time to create the file "demo.php"
 
-
+```
 <?php
+#demo.php
 phpinfo();
 ?>
+```
 
 # docker stacks
 
