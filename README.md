@@ -1,5 +1,5 @@
 ---
-modified: 2021-01-25T14:52:07+01:00
+modified: 2021-01-25T15:41:56+01:00
 ---
 
 # Docker_ASIX
@@ -181,6 +181,36 @@ This is useful to explore the default files of someone Docker Images.
 
 # docker-compose
 
+## docker-compose explanation
+
+## docker-compose installation
+
+## docker-compose first example (php apache web)
+
+      First step is to create the file "docker-compose.yml"
+
+      $ touch ./docker-compose.yml
+
+      Once we have the file created we need to insert the next text inside the created file:
+
+```
+version: "3.9"
+services:
+  web:
+    image: php:7.0-apache
+    ports:
+      - 80:80
+    volumes:
+      - ./demo.php:/var/www/index.php
+```
+
+      Now, it's time to create the file "demo.php"
+
+
+<?php
+phpinfo();
+?>
+
 # docker stacks
 
 # other things to keep in mind
@@ -192,6 +222,8 @@ This is useful to explore the default files of someone Docker Images.
 ## docker push
 
 ## Docker file
+
+## .env file
 
 ## docker volume && docker mount
 
