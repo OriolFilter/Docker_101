@@ -17,7 +17,7 @@ A docker is a isolated*1 virtual machine.
 
 ## How dockers work?
 
-//Now that we can agree on what's a docker, we can take a further explanation.
+[comment]: <>(//Now that we can agree on what's a docker, we can take a further explanation.)
 
 Dockers are preconfigured systems, usually supplying a single function or service (but not necessarily) and only with the packages necessaries to accomplish his commitments, the idea behind this is trying to use the minimum of resources as possibles, leaving more usable space.
 
@@ -97,7 +97,7 @@ That's why at the moment, there is no container in the container list.
 
 ### Avoid docker from shutting down
 
-    $ docker run ubuntu -t -d
+    $ docker run -t -d ubuntu
 
 
 By default, if you don't specify the docker version it will try to use the one that you have alredy downloaded in your machine, if can't find it in your machine will proceed to download the latst version.
@@ -107,7 +107,6 @@ By default, if you don't specify the docker version it will try to use the one t
     -t: Prevents the Docker from shutting down once has no labors left.
 
 ### Connect to running docker
-
 
 First step is to get the Docker container id
 
@@ -128,11 +127,25 @@ Still, we can execute other commands without get attached.
 
        $ docker container exec -it $DOCKERID ls /
 
+### Stop running docker
+
+Now that we know how to get the cotainer id, it's time to remove the ubuntu docker that we just start.
+
+First, we need to stop the container, to do this we need get again the container id.
+
+    $ docker container ls
+
+    $ docker container stop $ID
+
+Once the container is stopped, we can proceed to remove it.
+
+    $ docker container stop $ID
+
 ### Nginx example (web server service)
 
     $ docker run --name desired-container-name -d -p 8080:80 nginx
 
-    -p: Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 8080 from the nginx container, and placing it in our port 80, to test if it works you can open http://localhost:80 or http://localhost.
+    -p: <our_port:docker_port>  Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 80 from the nginx container, and placing it in our port 8080, to test if it works you can open http://localhost:80 or http://localhost.
 
     --name: Let's us setup a custom docker container image.
 
@@ -148,20 +161,25 @@ First step is to create the file and it's content, we are okay with a simple one
 
 Now it's time to run the docker container with our custom file.
 
-    $ docker run --name desired-container-name -d -p 8080:80 -v index.html:/var/www/html/index.html:ro nginx
+    $ docker run --name desired-container-name -d -p 8080:80 -v  "$(pwd)/index.html:/usr/share/nginx/html/index.html:ro" nginx
 
 Now, if we check our webpage again, we can see our new message.
 
-We can also share a entire folder.
+We can also share an entire folder.
 
-    $ docker run --name desired-container-name -d -p 8080:80 -v folder_path:/var/www/html/:ro nginx
+    $ mkdir folder
+
+    $ printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> folder/index.html
+
+    $ docker run --name desired-container-name -d -p 8080:80 -v "$(pwd)/folder:/usr/share/nginx/html/:ro" nginx
 
     -v: Lets us substitude a folder or a file in our docker container by the folder or file specified, we can also use virtual volumes in case we created them.
 
 ### Ubuntu with shared folders
 
+For this example is important that we don't create any folder.
 
-    $ docker run -t -v ./newfolder:/shared:rw  ubuntu:latest
+    $ docker run -t -d -v "$(pwd)/newfolder/:/shared/:rw"  ubuntu:latest
 
 Now we need to get the Docker container id so we can connect to the container.
 
@@ -173,13 +191,15 @@ Once we find the Docker id we need to connect to the container and attach the te
 
 Now that we are connected to the container, it's time to create a file in "/shared" 
 
-    $ prtintf "Hi, file created from Docker container!" > /shared/.newfile
+    $ prtintf "Hi, file created from Docker container!" > /shared/newfile
 
 Once the file is created just left exit the container and check our new folder.
 
     $ exit
     $ ls ./newfolder
-    $ cat ./newfolder/.newfile
+    $ cat ./newfolder/newfile
+
+As we can see, we didn't need to create the folder to share it, docker create it for us.
 
 
 # docker-compose
@@ -203,9 +223,9 @@ services:
   web:
     image: php:7.0-apache
     ports:
-      - 80:80
+      - 8080:80
     volumes:
-      - ./demo.php:/var/www/index.php
+      - ./demo.php:/var/www/html/index.php:ro
 ```
 
 Now, it's time to create the file "demo.php"
@@ -216,6 +236,12 @@ Now, it's time to create the file "demo.php"
 phpinfo();
 ?>
 ```
+
+Once we have the files created, we can proceed to start the docker-container.
+
+    $ docker-container up
+
+To stop it we can simply press control+C
 
 # docker stacks
 
