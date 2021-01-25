@@ -243,6 +243,10 @@ Once we have the files created, we can proceed to start the docker-container.
 
 To stop it we can simply press control+C
 
+
+[comment]: <> (checked till here.)
+
+
 # docker stacks
 
 # other things to keep in mind
