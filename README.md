@@ -293,6 +293,7 @@ https://docs.docker.com/compose/compose-file/compose-file-v3/
         # network_mode: host
 
         volumes: # Volumes to share with the docker
+
          # - type: volume  # this works for virtualy created docker volumes
          #   source: mycreatedvolume
          #   target: /data
@@ -300,9 +301,10 @@ https://docs.docker.com/compose/compose-file/compose-file-v3/
          #   volume:
          #     nocopy: true
 
-          - type: bind
+          - type: bind # instead of using a created volume it uses a folder of our system. 
             source: ./demo.php
-            target: /var/www/html/index.php:ro
+            target: /var/www/html/index.php
+            read_only: true
 
           # - ./demo.php:/var/www/html/index.php:ro # This is the simple way 
 
