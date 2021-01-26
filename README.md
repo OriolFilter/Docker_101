@@ -300,14 +300,15 @@ https://docs.docker.com/compose/compose-file/compose-file-v3/
 
 ## docker-compose 2 services
 
-This time we will use 2 services, to make things easy and fast, both will be web services, in this case we will use apache and nginx, with default files
+This time we will use 2 services, to make things easy and fast, both will be web services, in this case we will use apache (not php apache) and nginx, with default files.
+
 
 ```
 #docker-compose.yml
 version: "3.9"
 services:
   web1:
-    image: php:7.0-apache
+    image: httpd
     ports:
       - target: 80
         published: 8080 # This time we decide to publish port 8080
