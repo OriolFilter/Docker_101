@@ -251,21 +251,21 @@ To stop it we can simply press control+C
 
 ## docker-compose tags
 
-    version: which version of docker-compose use. I don't really understand how it works at all, so i guess the later the better, I think it takes as a integer, so if you use 3.9 it will save it as 3, instead of a float 3.9, this field is optional since docker-composer version 1.27.0
-
 https://docs.docker.com/compose/compose-file/
 
-    services: list of services to create, the service name isn't intended to be the service name or the docker name, you can place the name that helps you idenftify the service.
+    version: "3.9" # which version of docker-compose use. I don't really understand how it works at all, so i guess the later the better, I think it takes as a integer, so if you use 3.9 it will save it as 3, instead of a float 3.9, this field is optional since docker-composer version 1.27.0
 
-      service_name: As said previously, this name is field to be custom, in the example shown before we call it "web".
+    services: # list of services to create, the service name isn't intended to be the service name or the docker name, you can place the name that helps you idenftify the service.
 
-        image: # docker-container-image:version
+      service_name: # As said previously, this name is field to be custom, in the example shown before we call it "web".
 
-        build: # In case we want to use a docker file instead of a docker from dockerhub, docker file will be adressed later
+        image: php:7.1.2-apache # docker-container-image:version
 
-          context: Directory where docker file is located (with respect of the location from the user executing the file)
+        # build: # In case we want to use a docker file instead of a docker from dockerhub, docker file will be adressed later
 
-          build: File name, in case the file is called "dockerfile" we can use a dot '.', otherwise we will use './dockerfile'.
+         # context: Directory where docker file is located (with respect of the location from the user executing the file)
+
+         # build: File name, in case the file is called "dockerfile" we can use a dot '.', otherwise we will use './dockerfile'.
 
         ports: # Ports to publish with from the docker
           
@@ -285,20 +285,12 @@ https://docs.docker.com/compose/compose-file/
         # network_mode: host
 
         volumes: # Volumes to share with the docker
-
-         # - type: volume  # this works for virtualy created docker volumes
-         #   source: mycreatedvolume
-         #   target: /data
-         #   read_only: true # Sets the volume as read only
-         #   volume:
-         #     nocopy: true
-
           - type: bind # instead of using a created volume it uses a folder or file in our system. 
             source: ./demo.php
             target: /var/www/html/index.php
             read_only: true
 
-          # - ./demo.php:/var/www/html/index.php:ro # This is the simple way 
+         # - ./demo.php:/var/www/html/index.php:ro # This is the simple way
 
 To test if it works you can open http://localhost:8080.
 
@@ -306,6 +298,27 @@ To test if it works you can open http://localhost:8080.
 
 https://docs.docker.com/compose/compose-file/compose-file-v3/
 
+## docker-compose 2 services
+
+This time we will use 2 services, to make things easy and fast, both will be web services, in this case we will use apache and nginx, with default files
+
+```
+#docker-compose.yml
+version: "3.9"
+services:
+  web1:
+    image: php:7.0-apache
+    ports:
+      - target: 80
+        published: 8080 # This time we decide to publish port 8080
+  web2:
+    image: nginx
+    ports:
+      - target: 80
+        published: 8081 # This time we decide to publish port 8081
+```
+
+To test if it works you can open http://localhost:8080 and http://localhost:8081.
 
 # docker stacks
 
