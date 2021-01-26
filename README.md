@@ -35,35 +35,40 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 # How to start
 
-## Docker installation
+## Docker installation # need to check
 
 ### apt
-
-    sudo apt-get update
-    sudo apt-get install docker #?? check
+```shell
+$ sudo apt-get update
+$ sudo apt-get install docker #?? check
+```
 
 Debian/Ubuntu repositories tends to be older versions (2-3 years old) but with ensured stability.
 
 ### pacman
-
-    sudo pacman -Ssy
-    sudo pacman -S docker
+```shell
+$ sudo pacman -Ssy
+$ sudo pacman -S docker
+```
 
 ## Check instalation
-
-    docker -v
+```shell
+$ docker -v
+```
 
 ## Start docker service
 
 To start using dockers you need to start the service (unless it's alredy running) 
 
 ### Service (Debian based distros)
-
-    sudo service docker start
+```shell
+$ sudo service docker start
+```
 
 ### Systemctl (Arch based distros)
-
-    sudo systemctl start docker
+```shell
+$ sudo systemctl start docker
+```
 
 ## Enable docker service
 
@@ -72,14 +77,16 @@ You can enable the service instead of start it, so it starts on boot, but not re
 # docker run
 
 ## First example
-
-    $ docker run ubuntu:latest ls /
+```shell
+$ docker run ubuntu:latest ls /
+```
 
 ### Explanation
 
 
-
-    $ docker run ubuntu:latest ls /
+```shell
+$ docker run ubuntu:latest ls /
+```
     <docker> <run> <ubuntu>:<latest> <ls />
 
     <package> <function> <docker image from docker.hub>:<version from the image> <command> 
@@ -87,8 +94,9 @@ You can enable the service instead of start it, so it starts on boot, but not re
 Here we are starting a virtual Ubuntu, with the latest version aviable at Docker Hub,  and executing the command "ls /"
 
 ### View active dockers
-
-      $ docker container ls
+```shell
+$ docker container ls
+```
 
 Will return a list of active dockers, and some information about it.
 
@@ -99,8 +107,9 @@ That's why at the moment, there is no container in the container list.
 
 ### Avoid docker from shutting down
 
-    $ docker run -t -d ubuntu
-
+```shell
+$ docker run -t -d ubuntu
+```
 
 By default, if you don't specify the docker version it will try to use the one that you have alredy downloaded in your machine, if can't find it in your machine will proceed to download the latst version.
 
@@ -111,42 +120,46 @@ By default, if you don't specify the docker version it will try to use the one t
 ### Connect to running docker
 
 First step is to get the Docker container id
-
-    $ docker container ls
+```shell
+$ docker container ls
+```
 
 Once we have the id we have to run the next command.
-
-    $ docker container exec -it $DOCKERID bash
+```shell
+$ docker container exec -it $DOCKERID bash
+```
 
 We use bash to attach our terminal to the container one, but some systems might not have "bash", instead of bash we can use "sh".
-
-    $ docker container exec -it $DOCKERID sh
+```shell
+$ docker container exec -it $DOCKERID sh
+```
 
 Now that we are connected to the terminal we could execute commands inside the docker.
 This is useful to explore the default files of someone Docker Images.
 
 Still, we can execute other commands without get attached.
-
-       $ docker container exec -it $DOCKERID ls /
+```shell
+$ docker container exec -it $DOCKERID ls /
+```
 
 ### Stop running docker
 
 Now that we know how to get the cotainer id, it's time to remove the ubuntu docker that we just start.
 
 First, we need to stop the container, to do this we need get again the container id.
+```shell
+$ docker container ls
 
-    $ docker container ls
-
-    $ docker container stop $ID
-
+$ docker container stop $ID
+```
 Once the container is stopped, we can proceed to remove it.
-
-    $ docker container stop $ID
-
+```shell
+$ docker container stop $ID
+```
 ### Nginx example (web server service)
-
-    $ docker run --name desired-container-name -d -p 8080:80 nginx
-
+```shell
+$ docker run --name desired-container-name -d -p 8080:80 nginx
+```
 > -p: <our_port:docker_port>  Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 80 from the nginx container, and placing it in our port 8080.
 
 > --name: Let's us setup a custom docker container image.
@@ -159,48 +172,51 @@ To test if it works you can open http://localhost:80 or http://localhost.
 This time we will use a custom index.html file, instead of the nginx default one.
 
 First step is to create the file and it's content, we are okay with a simple one.
-
-    printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> index.html
-
+```shell
+$ printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> index.html
+```
 Now it's time to run the docker container with our custom file.
-
-    $ docker run --name desired-container-name -d -p 8080:80 -v  "$(pwd)/index.html:/usr/share/nginx/html/index.html:ro" nginx
-
+```shell
+$ docker run --name desired-container-name -d -p 8080:80 -v  "$(pwd)/index.html:/usr/share/nginx/html/index.html:ro" nginx
+```
 Now, if we check our webpage again, we can see our new message.
 
 We can also share an entire folder.
-
-    $ mkdir folder
-
-    $ printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> folder/index.html
-
-    $ docker run --name desired-container-name -d -p 8080:80 -v "$(pwd)/folder:/usr/share/nginx/html/:ro" nginx
-
+```shell
+$ mkdir folder
+$ printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> folder/index.html
+$ docker run --name desired-container-name -d -p 8080:80 -v "$(pwd)/folder:/usr/share/nginx/html/:ro" nginx
+```
 > -v: Lets us substitude a folder or a file in our docker container by the folder or file specified, we can also use virtual volumes in case we created them.
 
 ### Ubuntu with shared folders
 
 For this example is important that we don't create any folder.
-
-    $ docker run -t -d -v "$(pwd)/newfolder/:/shared/:rw"  ubuntu:latest
-
+```shell
+$ docker run -t -d -v "$(pwd)/newfolder/:/shared/:rw"  ubuntu:latest
+```
 Now we need to get the Docker container id so we can connect to the container.
 
-    $ docker container ls
-
+```shell
+$ docker container ls
+```
 Once we find the Docker id we need to connect to the container and attach the terminal
 
-    $ docker container exec -it $CONTAINER_ID bash
-
+```shell
+$ docker container exec -it $CONTAINER_ID bash
+```
 Now that we are connected to the container, it's time to create a file in "/shared" 
 
-    $ prtintf "Hi, file created from Docker container!" > /shared/newfile
-
+```shell
+$ prtintf "Hi, file created from Docker container!" > /shared/newfile
+```
 Once the file is created just left exit the container and check our new folder.
 
-    $ exit
-    $ ls ./newfolder
-    $ cat ./newfolder/newfile
+```shell
+$ exit
+$ ls ./newfolder
+$ cat ./newfolder/newfile
+```
 
 As we can see, we didn't need to create the folder to share it, docker create it for us.
 
@@ -215,11 +231,12 @@ As we can see, we didn't need to create the folder to share it, docker create it
 
 First step is to create the file "docker-compose.yml" (the file can use ".yaml" instead of ".yml")
 
+```shell
     $ touch ./docker-compose.yml
-
+```
 Once we have the file created we need to insert the next text inside the created file:
 
-```
+```yaml
 #docker-compose.yml
 version: "3.9"
 services:
@@ -243,7 +260,9 @@ phpinfo();
 
 Once we have the files created, we can proceed to start the docker-container.
 
-    $ docker-compose up
+```shell
+$ docker-compose up
+```
 
 To stop it we can simply press control+C
 
@@ -253,44 +272,46 @@ To stop it we can simply press control+C
 
 https://docs.docker.com/compose/compose-file/
 
-    version: "3.9" # which version of docker-compose use. I don't really understand how it works at all, so i guess the later the better, I think it takes as a integer, so if you use 3.9 it will save it as 3, instead of a float 3.9, this field is optional since docker-composer version 1.27.0
+```yaml
+version: "3.9" # which version of docker-compose use. I don't really understand how it works at all, so i guess the later the better, I think it takes as a integer, so if you use 3.9 it will save it as 3, instead of a float 3.9, this field is optional since docker-composer version 1.27.0
 
-    services: # list of services to create, the service name isn't intended to be the service name or the docker name, you can place the name that helps you idenftify the service.
+services: # list of services to create, the service name isn't intended to be the service name or the docker name, you can place the name that helps you idenftify the service.
 
-      service_name: # As said previously, this name is field to be custom, in the example shown before we call it "web".
+  service_name: # As said previously, this name is field to be custom, in the example shown before we call it "web".
 
-        image: php:7.1.2-apache # docker-container-image:version
+    image: php:7.1.2-apache # docker-container-image:version
 
-        # build: # In case we want to use a docker file instead of a docker from dockerhub, docker file will be adressed later
+    # build: # In case we want to use a docker file instead of a docker from dockerhub, docker file will be adressed later
 
-         # context: Directory where docker file is located (with respect of the location from the user executing the file)
+     # context: Directory where docker file is located (with respect of the location from the user executing the file)
 
-         # build: File name, in case the file is called "dockerfile" we can use a dot '.', otherwise we will use './dockerfile'.
+     # build: File name, in case the file is called "dockerfile" we can use a dot '.', otherwise we will use './dockerfile'.
 
-        ports: # Ports to publish with from the docker
-          
-          # - docker_port:published_port 
-          # - "docker_port:published_port"
+    ports: # Ports to publish with from the docker
+      
+      # - docker_port:published_port 
+      # - "docker_port:published_port"
 
-           - target: 80 # docker port
-             published: 8080 # published port
-             protocol: tcp # tpc/udp # Optional, only select one tcp or udp, by default it will choose tcp
-             # mode: host # Optional
+       - target: 80 # docker port
+         published: 8080 # published port
+         protocol: tcp # tpc/udp # Optional, only select one tcp or udp, by default it will choose tcp
+         # mode: host # Optional
 
-        restart: on-failure # restart policy, what to do once container stops working, this option is ignored on swarm mode.
-        # restart: "no"
-        # restart: always
-        # restart: on-failure
-        # restart: unless-stopped
-        # network_mode: host
+    restart: on-failure # restart policy, what to do once container stops working, this option is ignored on swarm mode.
+    # restart: "no"
+    # restart: always
+    # restart: on-failure
+    # restart: unless-stopped
+    # network_mode: host
 
-        volumes: # Volumes to share with the docker
-          - type: bind # instead of using a created volume it uses a folder or file in our system. 
-            source: ./demo.php
-            target: /var/www/html/index.php
-            read_only: true
+    volumes: # Volumes to share with the docker
+      - type: bind # instead of using a created volume it uses a folder or file in our system. 
+        source: ./demo.php
+        target: /var/www/html/index.php
+        read_only: true
 
-         # - ./demo.php:/var/www/html/index.php:ro # This is the simple way
+     # - ./demo.php:/var/www/html/index.php:ro # This is the simple way
+```
 
 To test if it works you can open http://localhost:8080.
 
@@ -304,7 +325,7 @@ This time we will use 2 services, to make things easy and fast, both will be web
 Also, this time, we will name the docker-compose file as "docker-compose2.yml".
 
 
-```
+```yaml
 #docker-compose2.yml
 version: "3.9"
 services:
@@ -321,8 +342,9 @@ services:
 ```
 
 Once we created the compose file only left start it.
-
-    $ docker-compose  -f docker-compose2.yml up
+```shell
+$ docker-compose  -f docker-compose2.yml up
+```
 
 
 >-f: Let us specify the path to the file desired to use.
@@ -339,21 +361,41 @@ To test if it works you can open http://localhost:8080 and http://localhost:8081
 
 Docker pull let us download images to our system, so we don't have to download them later.
 
-    $ docker pull nginx:1.18-alpine
+```shell
+$ docker pull nginx:1.18-alpine
+```
 
 Now if we list our downloaded images, we should be able to see it.
 
-    $ docker images ls
+```shell
+$ docker images ls
+```
 
-## docker push
+[comment]: <> (## docker push)
 
-## Docker file
+[comment]: <> (https://docs.docker.com/engine/reference/commandline/push/)
+
+[comment]: <> (Probably it's not important to know as a beginner, might comment it)
+
+## dockerfile
+
+With dockerfiles we can create custom images from a base image.
+
+First step we are going to need to create the dockerfile with it's content.
+
+```dockerfile
+FROM httpd
+RUN echo hi from dockerfile > /var/html/www/index.html
+```
+
+
+
 
 ## .env file
 
 ## docker volume && docker mount
 
-         https://docs.docker.com/storage/volumes/
+https://docs.docker.com/storage/volumes/
 
 
 
