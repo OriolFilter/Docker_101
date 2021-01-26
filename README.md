@@ -1,6 +1,6 @@
 ---
 created: 2021-01-20T14:38:23+01:00
-modified: 2021-01-26T19:24:03+01:00
+modified: 2021-01-26T19:25:19+01:00
 ---
 
 # Docker_ASIX
@@ -353,7 +353,7 @@ To test if it works you can open http://localhost:8080 and http://localhost:8081
 
 # docker stacks
 
-# other things to keep in mind
+# Docker custom images
 
 ## docker pull
 
