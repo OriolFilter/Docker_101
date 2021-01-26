@@ -377,21 +377,45 @@ $ docker images ls
 
 [comment]: <> (Probably it's not important to know as a beginner, might comment it)
 
+
 ## dockerfile
 
-With dockerfiles we can create custom images from a base image.
+With dockerfiles we can create custom images from a base image, which later we will build.
 
-First step we are going to need to create the dockerfile with it's content.
+First step we are going to need to create the dockerfile with it's content, which we will call 'dockerfile'.
+
+For this example we will use the nginx version alredy downloaded.
 
 ```dockerfile
-FROM httpd
-RUN echo hi from dockerfile > /var/html/www/index.html
+#dockerfile
+FROM nginx:1.18-alpine
+RUN printf "hi from dockerfile" | tee /usr/share/nginx/html/index.html
 ```
 
+## docker build
 
+We can build a custom docker image from a docker file.
 
+```shell
+$ docker build -t my_image .
+```
+We could do this instead.
+```shell
+$ docker build -t my_image . -f ./dockerfile
+```
 
-## .env file
+> -t: Let us specify the desired tag for the image
+
+> -f: Let us specify the file to use, if not specified it will search "./dockerfile"   
+
+### Run from builded images
+
+```shell
+$ docker run -p 8080:80 my_image
+```
+As we can see, we are calling it as any other image with "docker run".
+
+To test if it works you can open http://localhost:8080.
 
 ## docker volume && docker mount
 
