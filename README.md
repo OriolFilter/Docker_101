@@ -1,6 +1,6 @@
 ---
 created: 2021-01-20T14:38:23+01:00
-modified: 2021-01-26T19:40:28+01:00
+modified: 2021-01-26T19:48:37+01:00
 ---
 
 # Docker_ASIX
@@ -35,21 +35,19 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 # How to start
 
-## Docker installation # need to check
+## How to install
 
-### apt
-```shell
-sudo apt-get update
-sudo apt-get install docker #?? check
-```
+### Debian based distributions
 
-Debian/Ubuntu repositories tends to be older versions (2-3 years old) but with ensured stability.
+Follow the instructions located in the next link.
 
-### pacman
-```shell
-sudo pacman -Ssy
-sudo pacman -S docker
-```
+https://docs.docker.com/engine/install/ubuntu/
+
+### Arch based distributions
+
+Follow the instructions located in the next link.
+
+https://wiki.archlinux.org/index.php/Docker
 
 ## Check instalation
 ```shell
@@ -227,6 +225,9 @@ As we can see, we didn't need to create the folder to share it, docker create it
 
 ## docker-compose installation
 
+Follow the instructions located in the next website.
+
+https://docs.docker.com/compose/install/
 ## docker-compose first example (php apache web)
 
 First step is to create the file "docker-compose.yml" (the file can use ".yaml" instead of ".yml")
