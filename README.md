@@ -104,9 +104,9 @@ That's why at the moment, there is no container in the container list.
 
 By default, if you don't specify the docker version it will try to use the one that you have alredy downloaded in your machine, if can't find it in your machine will proceed to download the latst version.
 
-    -d: Dettach from the terminal, this way you can keep working with the terminal and close it if necessary, if you don't understand it we can say it sends the docker to the background.
+> -d: Dettach from the terminal, this way you can keep working with the terminal and close it if necessary, if you don't understand it we can say it sends the docker to the background.
 
-    -t: Prevents the Docker from shutting down once has no labors left.
+> -t: Prevents the Docker from shutting down once has no labors left.
 
 ### Connect to running docker
 
@@ -147,9 +147,9 @@ Once the container is stopped, we can proceed to remove it.
 
     $ docker run --name desired-container-name -d -p 8080:80 nginx
 
-    -p: <our_port:docker_port>  Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 80 from the nginx container, and placing it in our port 8080.
+> -p: <our_port:docker_port>  Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 80 from the nginx container, and placing it in our port 8080.
 
-    --name: Let's us setup a custom docker container image.
+> --name: Let's us setup a custom docker container image.
 
 In this case we don't need to use -t to avoid the container from closing since the service itself will prevent it from closing while it works correctly.\
 To test if it works you can open http://localhost:80 or http://localhost.
@@ -176,7 +176,7 @@ We can also share an entire folder.
 
     $ docker run --name desired-container-name -d -p 8080:80 -v "$(pwd)/folder:/usr/share/nginx/html/:ro" nginx
 
-    -v: Lets us substitude a folder or a file in our docker container by the folder or file specified, we can also use virtual volumes in case we created them.
+> -v: Lets us substitude a folder or a file in our docker container by the folder or file specified, we can also use virtual volumes in case we created them.
 
 ### Ubuntu with shared folders
 
@@ -301,10 +301,11 @@ https://docs.docker.com/compose/compose-file/compose-file-v3/
 ## docker-compose 2 services
 
 This time we will use 2 services, to make things easy and fast, both will be web services, in this case we will use apache (not php apache) and nginx, with default files.
+Also, this time, we will name the docker-compose file as "docker-compose2.yml".
 
 
 ```
-#docker-compose.yml
+#docker-compose2.yml
 version: "3.9"
 services:
   web1:
@@ -319,6 +320,13 @@ services:
         published: 8081 # This time we decide to publish port 8081
 ```
 
+Once we created the compose file only left start it.
+
+    $ docker-compose  -f docker-compose2.yml up
+
+
+>-f: Let us specify the path to the file desired to use.
+
 To test if it works you can open http://localhost:8080 and http://localhost:8081.
 
 # docker stacks
@@ -328,6 +336,14 @@ To test if it works you can open http://localhost:8080 and http://localhost:8081
 ## docker build
 
 ## docker pull
+
+Docker pull let us download images to our system, so we don't have to download them later.
+
+    $ docker pull nginx:1.18-alpine
+
+Now if we list our downloaded images, we should be able to see it.
+
+    $ docker images ls
 
 ## docker push
 
