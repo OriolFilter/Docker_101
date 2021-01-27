@@ -399,7 +399,7 @@ We can build a custom docker image from a docker file.
 docker build -t my_image .
 ```
 We could do this instead.
-```{r, engine='bash', count_lines}
+```properties
 docker build -t my_image . -f ./dockerfile
 ```
 
@@ -409,7 +409,7 @@ docker build -t my_image . -f ./dockerfile
 
 ### Run from builded images
 
-```{r, engine='bash', count_lines}
+```{r, engine='properties', count_lines}
 docker run -p 8080:80 my_image
 ```
 As we can see, we are calling it as any other image with "docker run".
