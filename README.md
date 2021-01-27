@@ -395,7 +395,7 @@ RUN printf "hi from dockerfile" | tee /usr/share/nginx/html/index.html
 
 We can build a custom docker image from a docker file.
 
-```shell
+```bash
 docker build -t my_image .
 ```
 We could do this instead.
@@ -409,7 +409,7 @@ docker build -t my_image . -f ./dockerfile
 
 ### Run from builded images
 
-```{r, engine='properties', count_lines}
+```bash
 docker run -p 8080:80 my_image
 ```
 As we can see, we are calling it as any other image with "docker run".
