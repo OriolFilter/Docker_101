@@ -222,11 +222,14 @@ As we can see, we didn't need to create the folder to share it, docker create it
 
 ## docker-compose explanation
 
+Docker compose let us set up multiple docker container from a single file, making it easier to config and to manage.   
+
 ## docker-compose installation
 
 Follow the instructions located in the next website.
 
 https://docs.docker.com/compose/install/
+
 ## docker-compose first example (php apache web)
 
 First step is to create the file "docker-compose.yml" (the file can use ".yaml" instead of ".yml")
@@ -494,8 +497,6 @@ services:
     deploy:
       replicas: 2
 ```
-
-
 
 Once we have our docker-compose file created, it's time to deploy our stack.
 
