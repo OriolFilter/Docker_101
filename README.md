@@ -410,7 +410,7 @@ $ docker build -t my_image . -f ./dockerfile
 
 ### Run from builded images
 
-```shell
+```{r, engine='bash', count_lines}
 $ docker run -p 8080:80 my_image
 ```
 As we can see, we are calling it as any other image with "docker run".
