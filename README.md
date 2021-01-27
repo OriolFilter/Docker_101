@@ -237,7 +237,7 @@ touch ./docker-compose.yml
 ```
 Once we have the file created we need to insert the next text inside the created file:
 
-```yaml
+```yaml {.line-numbers}
 #docker-compose.yml
 version: "3.9"
 services:
@@ -426,10 +426,3 @@ https://docs.docker.com/storage/volumes/
 
 - Oriol Filter
 - Internet
-
-```javascript {.line-numbers}
-//testing
-function add(x, y) {
-  return x + y;
-}
-```
