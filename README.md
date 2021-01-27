@@ -83,7 +83,7 @@ docker run ubuntu:latest ls /
 ```shell
 docker run ubuntu:latest ls /
 ```
-```properties
+```
     <docker> <run> <ubuntu>:<latest> <ls />
     <package> <mode> <docker image from docker.hub>:<version from the image> <command> 
 ```
@@ -530,9 +530,9 @@ With the docker name that we used before (or that we can see with the command "d
 docker stack ps my_stack
 ```
 
-```properties
-    <docker> <stack> <ps> <my_stack>
-    <package> <mode> <function>:<desired stack name> 
+```
+<docker> <stack> <ps> <my_stack>
+<package> <mode> <function>:<desired stack name> 
 ```
 > -c: With this argument we can point the file desired to use, otherwise by default it will use "docker-compose.yml" or "docker-compose.yaml"
 
