@@ -477,13 +477,13 @@ Probably it's not important to know as a beginner, but still important to know a
 
 [comment]: <> (https://docs.docker.com/engine/swarm/)
 
-## docker stack/swarm
+# docker stack/swarm
 
-### Docker stack explanation
+## Docker stack explanation
 
 With docker stack we can manage groups of dockers, being able to have replicas of the same docker, in case for some reason the published one fails, next in the backup list will replace it, leading to better disponibility.
 
-### Deploy docker replicas
+## Deploy docker replicas
 
 In this first example we will use only one docker service, but with 2 replicas.
 
@@ -516,7 +516,7 @@ docker stack deploy -c docker-compose.yml my_stack
 
 To test if it works you can open http://localhost:8080.
 
-### Monitor your docker stacks
+## Monitor your docker stacks
 
 Now that we got our stack running, we can list our docker stacks.
 
@@ -538,7 +538,7 @@ docker stack ps my_stack
 
 As we can see, we have 2 stacks running right now, and if we check the names, we can see the names are "$STACK_$SERVICE_1/2/..."
 
-### Test our docker replicas
+## Test our docker replicas
 
 Now it's time to test our replicas, to make things easy we will stop our active running container, so the backup one replace it.
 
@@ -572,7 +572,7 @@ To test if it works you can open http://localhost:8080.
 If we want to do further testing we can stop the container from the replica2 and proceed to check again the status of the page and the status of the containers.
 
 
-## docker volume && docker mount
+# docker volume && docker mount
 
 https://docs.docker.com/storage/volumes/
 
