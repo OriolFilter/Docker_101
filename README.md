@@ -30,7 +30,7 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 *1 Docker allows you to configure different actions on shutdown, in this case we would want to restart.
 
-*2 Each time the docker starts, it doesn't conserves any file from the past sessions, still, you can configure persistence specified files or folders (and specify if this ones can be modified), allowing you to use custom configuration and maintain the changes for the next session (ie. if you have a database, ftp server, mail server, etc.).
+*2 Each time the docker starts, it doesn't conserve any file from the past sessions, still, you can configure persistence specified files or folders (and specify if this ones can be modified), allowing you to use custom configuration and maintain the changes for the next session (ie. if you have a database, ftp server, mail server, etc.).
 
 
 # How to start
