@@ -83,9 +83,10 @@ docker run ubuntu:latest ls /
 ```shell
 docker run ubuntu:latest ls /
 ```
+```properties
     <docker> <run> <ubuntu>:<latest> <ls />
-
-    <package> <function> <docker image from docker.hub>:<version from the image> <command> 
+    <package> <mode> <docker image from docker.hub>:<version from the image> <command> 
+```
 
 Here we are starting a virtual Ubuntu, with the latest version aviable at Docker Hub,  and executing the command "ls /"
 
@@ -150,6 +151,7 @@ docker container stop $ID
 ```
 Once the container is stopped, we can proceed to remove it.
 ```shell
+docker container stop 961c5419ef6d
 docker container stop $ID
 ```
 ### Nginx example (web server service)
@@ -527,6 +529,12 @@ With the docker name that we used before (or that we can see with the command "d
 ```shell
 docker stack ps my_stack
 ```
+
+```properties
+    <docker> <stack> <ps> <my_stack>
+    <package> <mode> <function>:<desired stack name> 
+```
+> -c: With this argument we can point the file desired to use, otherwise by default it will use "docker-compose.yml" or "docker-compose.yaml"
 
 As we can see, we have 2 stacks running right now, and if we check the names, we can see the names are $STACK_$SERVICE_1/2/...
 
