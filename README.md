@@ -326,7 +326,7 @@ This time we will use 2 services, to make things easy and fast, both will be web
 Also, this time, we will name the docker-compose file as "docker-compose2.yml".
 
 
-```yaml
+```yaml  {.line-numbers}
 #docker-compose2.yml
 version: "3.9"
 services:
@@ -399,7 +399,7 @@ We can build a custom docker image from a docker file.
 docker build -t my_image .
 ```
 We could do this instead.
-```properties
+```shell
 docker build -t my_image . -f ./dockerfile
 ```
 
