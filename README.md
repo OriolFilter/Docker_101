@@ -77,15 +77,15 @@ You can enable the service instead of start it, so it starts on boot, but not re
 docker run ubuntu:latest ls /
 ```
 
-### Explanation
+### docker run xplanation
 
 
 ```shell
 docker run ubuntu:latest ls /
 ```
 ```
-    <docker> <run> <ubuntu>:<latest> <ls />
-    <package> <mode> <docker image from docker.hub>:<version from the image> <command> 
+<docker> <run> <ubuntu>:<latest> <ls />
+<package> <mode> <docker image from docker.hub>:<version from the image> <command> 
 ```
 
 Here we are starting a virtual Ubuntu, with the latest version aviable at Docker Hub,  and executing the command "ls /"
