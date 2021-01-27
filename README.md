@@ -17,8 +17,6 @@ A docker is a isolated*1 virtual machine.
 
 ## How dockers work?
 
-[comment]: <>(//Now that we can agree on what's a docker, we can take a further explanation.)
-
 Dockers are preconfigured systems, usually supplying a single function or service (but not necessarily) and only with the packages necessaries to accomplish his commitments, the idea behind this is trying to use the minimum of resources as possibles, leaving more usable space.
 
 ## Why use dockers?
@@ -163,6 +161,7 @@ docker run --name desired-container-name -d -p 8080:80 nginx
 > --name: Let's us setup a custom docker container image.
 
 In this case we don't need to use -t to avoid the container from closing since the service itself will prevent it from closing while it works correctly.\
+
 To test if it works you can open http://localhost:80 or http://localhost.
 
 ### Nginx example but with custom files
@@ -238,7 +237,7 @@ touch ./docker-compose.yml
 Once we have the file created we need to insert the next text inside the created file:
 
 ```yaml
-#docker-compose.yml
+# docker-compose.yml
 version: "3.9"
 services:
   web:
@@ -323,6 +322,7 @@ https://docs.docker.com/compose/compose-file/compose-file-v3/
 ## docker-compose 2 services
 
 This time we will use 2 services, to make things easy and fast, both will be web services, in this case we will use apache (not php apache) and nginx, with default files.
+
 Also, this time, we will name the docker-compose file as "docker-compose2.yml".
 
 
@@ -370,11 +370,6 @@ Now if we list our downloaded images, we should be able to see it.
 docker images ls
 ```
 
-[comment]: <> (## docker push)
-
-[comment]: <> (https://docs.docker.com/engine/reference/commandline/push/)
-
-[comment]: <> (Probably it's not important to know as a beginner, might comment it)
 
 
 ## dockerfile
@@ -407,14 +402,166 @@ docker build -t my_image . -f ./dockerfile
 
 > -f: Let us specify the file to use, if not specified it will search "./dockerfile"   
 
-### Run from builded images
+### build from docker-compose
 
+First step is to create the file docker-compose.
+
+```yaml
+# docker-compose.yml
+version: "3.9"
+services:
+  my_service:
+    build:
+        context: .
+        dockerfile: dockerfile
+    ports:
+      - target: 80
+        published: 8080
+```
+
+Once we have the file created, it's time to rise it up, to do this we call it like a normal docker-compose file.
+
+```shell
+docker-compose up
+```
+
+To test if it works you can open http://localhost:8080.
+
+### Run built images
+
+#### Run with docker run
 ```shell
 docker run -p 8080:80 my_image
 ```
 As we can see, we are calling it as any other image with "docker run".
 
+#### Run with docker-compose
+
+First step is to create the docker-compose file.
+
 To test if it works you can open http://localhost:8080.
+
+```yaml
+# docker-compose.yml
+version: "3.9"
+services:
+  my_service:
+    image: my_image
+    ports:
+      - target: 80
+        published: 8080
+```
+
+Once we have the file created, it's time to rise it up, to do this we call it like a normal docker-compose file.
+
+```shell
+docker-compose up
+```
+
+To test if it works you can open http://localhost:8080.
+
+## docker push
+
+With the command 'docker push' we are able to push an image to our dockerhub account, and later publish it so it's available to other users.
+
+https://docs.docker.com/engine/reference/commandline/push/
+
+Probably it's not important to know as a beginner, but still important to know about its existence.
+
+[comment]: <> (## Docker swarm)
+
+[comment]: <> (https://docs.docker.com/engine/swarm/)
+
+## docker stack/swarm
+
+### Docker stack explanation
+
+With docker stack we can manage groups of dockers, being able to have replicas of the same docker, in case for some reason the published one fails, next in the backup list will replace it, leading to better disponibility.
+
+### Deploy docker replicas
+
+In this first example we will use only one docker service, but with 2 replicas.
+
+```yaml
+# docker-compose.yml
+version: "3.9"
+services:
+  my_service:
+    image: my_image
+    ports:
+      - target: 80
+        published: 8080
+    deploy:
+      replicas: 2
+```
+
+
+
+Once we have our docker-compose file created, it's time to deploy our stack.
+
+To deploy our stack first we need to initialize a swarm network, to do this we will use the next line:
+
+```shell
+docker swarm init
+```
+
+And finally we can join our stack to our inizialized swarm.
+
+```shell
+docker stack deploy -c docker-compose.yml my_stack
+```
+
+To test if it works you can open http://localhost:8080.
+
+### Monitor your docker stacks
+
+Now that we got our stack running, we can list our docker stacks.
+
+```shell
+docker stack ls
+```
+
+With the docker name that we used before (or that we can see with the command "docker stack ls"), we can list the container process running in our docker stack.
+
+```shell
+docker stack ps my_stack
+```
+
+As we can see, we have 2 stacks running right now, and if we check the names, we can see the names are $STACK_$SERVICE_1/2/...
+
+### Test our docker replicas
+
+Now it's time to test our replicas, to make things easy we will stop our active running container, so the backup one replace it.
+
+To do this we need to list our running docker containers as we did previously, so we can obtain the container id from the desired container, remember the first container to be used is the one with the lower number in it's name, which should be 1.
+
+```shell
+docker stack ls
+```
+
+Once we have the container id, it's time to stop it.
+```shell
+docker container stop 961c5419ef6d
+```
+
+Finally we can check the process list from our stack and check the state of each container.
+
+```shell
+docker stack ps my_stack
+```
+
+As we can see, the container that we wanted to stop it's state it's "ready", and holds a subcontainer in it, which it's state it's "shutdown".
+
+And under them we should be able to see the replica n2, which is in "running" state.
+
+What happened regarding our first container is, once we forced the container to stop, the container shutdown, and restarted itself, but since our replica2 was ready and it took it's place, replica1 is holding in case replica2 stops working and need a replacement.
+
+Now only left is checking if our replica is working properly.
+
+To test if it works you can open http://localhost:8080.
+
+If we want to do further testing we can stop the container from the replica2 and proceed to check again the status of the page and the status of the containers.
+
 
 ## docker volume && docker mount
 
