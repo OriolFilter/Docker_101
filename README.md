@@ -536,7 +536,7 @@ docker stack ps my_stack
 ```
 > -c: With this argument we can point the file desired to use, otherwise by default it will use "docker-compose.yml" or "docker-compose.yaml"
 
-As we can see, we have 2 stacks running right now, and if we check the names, we can see the names are $STACK_$SERVICE_1/2/...
+As we can see, we have 2 stacks running right now, and if we check the names, we can see the names are "$STACK_$SERVICE_1/2/..."
 
 ### Test our docker replicas
 
