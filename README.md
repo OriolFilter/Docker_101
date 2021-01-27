@@ -237,7 +237,7 @@ touch ./docker-compose.yml
 ```
 Once we have the file created we need to insert the next text inside the created file:
 
-```yaml {.line-numbers}
+```yaml
 #docker-compose.yml
 version: "3.9"
 services:
@@ -326,7 +326,7 @@ This time we will use 2 services, to make things easy and fast, both will be web
 Also, this time, we will name the docker-compose file as "docker-compose2.yml".
 
 
-```yaml  {.line-numbers}
+```yaml
 #docker-compose2.yml
 version: "3.9"
 services:
@@ -409,7 +409,7 @@ docker build -t my_image . -f ./dockerfile
 
 ### Run from builded images
 
-```bash
+```shell
 docker run -p 8080:80 my_image
 ```
 As we can see, we are calling it as any other image with "docker run".
