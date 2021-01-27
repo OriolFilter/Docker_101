@@ -396,11 +396,11 @@ RUN printf "hi from dockerfile" | tee /usr/share/nginx/html/index.html
 
 We can build a custom docker image from a docker file.
 
-```shell
+```{r, engine='bash', count_lines}
 $ docker build -t my_image .
 ```
 We could do this instead.
-```shell
+```{r, engine='bash', count_lines}
 $ docker build -t my_image . -f ./dockerfile
 ```
 
