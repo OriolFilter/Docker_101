@@ -572,6 +572,8 @@ If we want to do further testing we can stop the container from the replica2 and
 
 # docker volume && docker mount
 
+Haven't use it enough to actually feel confident to talk about it.
+
 https://docs.docker.com/storage/volumes/
 
 
