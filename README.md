@@ -357,8 +357,6 @@ docker-compose  -f docker-compose2.yml up
 
 To test if it works you can open http://localhost:8080 and http://localhost:8081.
 
-# docker stacks
-
 # Docker custom images
 
 ## docker pull
