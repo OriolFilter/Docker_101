@@ -254,7 +254,7 @@ services:
 
 Now, it's time to create the file "demo.php"
 
-```
+```php
 <?php
 #demo.php
 phpinfo();
