@@ -1,6 +1,6 @@
 ---
-created: 2021-01-20T14:38:23+01:00\
-modified: 2021-01-25T15:41:56+01:00
+created: 2021-01-20T14:38:23+01:00
+modified: 2021-01-26T19:48:37+01:00
 ---
 
 # Docker_ASIX
@@ -35,25 +35,23 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 # How to start
 
-## Docker installation # need to check
+## How to install
 
-### apt
-```shell
-$ sudo apt-get update
-$ sudo apt-get install docker #?? check
-```
+### Debian based distributions
 
-Debian/Ubuntu repositories tends to be older versions (2-3 years old) but with ensured stability.
+Follow the instructions located in the next link.
 
-### pacman
-```shell
-$ sudo pacman -Ssy
-$ sudo pacman -S docker
-```
+https://docs.docker.com/engine/install/ubuntu/
+
+### Arch based distributions
+
+Follow the instructions located in the next link.
+
+https://wiki.archlinux.org/index.php/Docker
 
 ## Check instalation
 ```shell
-$ docker -v
+docker -v
 ```
 
 ## Start docker service
@@ -62,12 +60,12 @@ To start using dockers you need to start the service (unless it's alredy running
 
 ### Service (Debian based distros)
 ```shell
-$ sudo service docker start
+sudo service docker start
 ```
 
 ### Systemctl (Arch based distros)
 ```shell
-$ sudo systemctl start docker
+sudo systemctl start docker
 ```
 
 ## Enable docker service
@@ -78,14 +76,14 @@ You can enable the service instead of start it, so it starts on boot, but not re
 
 ## First example
 ```shell
-$ docker run ubuntu:latest ls /
+docker run ubuntu:latest ls /
 ```
 
 ### Explanation
 
 
 ```shell
-$ docker run ubuntu:latest ls /
+docker run ubuntu:latest ls /
 ```
     <docker> <run> <ubuntu>:<latest> <ls />
 
@@ -95,7 +93,7 @@ Here we are starting a virtual Ubuntu, with the latest version aviable at Docker
 
 ### View active dockers
 ```shell
-$ docker container ls
+docker container ls
 ```
 
 Will return a list of active dockers, and some information about it.
@@ -108,7 +106,7 @@ That's why at the moment, there is no container in the container list.
 ### Avoid docker from shutting down
 
 ```shell
-$ docker run -t -d ubuntu
+docker run -t -d ubuntu
 ```
 
 By default, if you don't specify the docker version it will try to use the one that you have alredy downloaded in your machine, if can't find it in your machine will proceed to download the latst version.
@@ -121,17 +119,17 @@ By default, if you don't specify the docker version it will try to use the one t
 
 First step is to get the Docker container id
 ```shell
-$ docker container ls
+docker container ls
 ```
 
 Once we have the id we have to run the next command.
 ```shell
-$ docker container exec -it $DOCKERID bash
+docker container exec -it $DOCKERID bash
 ```
 
 We use bash to attach our terminal to the container one, but some systems might not have "bash", instead of bash we can use "sh".
 ```shell
-$ docker container exec -it $DOCKERID sh
+docker container exec -it $DOCKERID sh
 ```
 
 Now that we are connected to the terminal we could execute commands inside the docker.
@@ -139,7 +137,7 @@ This is useful to explore the default files of someone Docker Images.
 
 Still, we can execute other commands without get attached.
 ```shell
-$ docker container exec -it $DOCKERID ls /
+docker container exec -it $DOCKERID ls /
 ```
 
 ### Stop running docker
@@ -148,17 +146,17 @@ Now that we know how to get the cotainer id, it's time to remove the ubuntu dock
 
 First, we need to stop the container, to do this we need get again the container id.
 ```shell
-$ docker container ls
+docker container ls
 
-$ docker container stop $ID
+docker container stop $ID
 ```
 Once the container is stopped, we can proceed to remove it.
 ```shell
-$ docker container stop $ID
+docker container stop $ID
 ```
 ### Nginx example (web server service)
 ```shell
-$ docker run --name desired-container-name -d -p 8080:80 nginx
+docker run --name desired-container-name -d -p 8080:80 nginx
 ```
 > -p: <our_port:docker_port>  Let's us set port forwarding from a Docker container to our actual computer, in this case, we are taking the port 80 from the nginx container, and placing it in our port 8080.
 
@@ -173,18 +171,18 @@ This time we will use a custom index.html file, instead of the nginx default one
 
 First step is to create the file and it's content, we are okay with a simple one.
 ```shell
-$ printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> index.html
+printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> index.html
 ```
 Now it's time to run the docker container with our custom file.
 ```shell
-$ docker run --name desired-container-name -d -p 8080:80 -v  "$(pwd)/index.html:/usr/share/nginx/html/index.html:ro" nginx
+docker run --name desired-container-name -d -p 8080:80 -v  "$(pwd)/index.html:/usr/share/nginx/html/index.html:ro" nginx
 ```
 Now, if we check our webpage again, we can see our new message.
 
 We can also share an entire folder.
 ```shell
-$ mkdir folder
-$ printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> folder/index.html
+mkdir folder
+printf "<h1>HI IM A CUSTOM INDEX.HTML</h1>"> folder/index.html
 $ docker run --name desired-container-name -d -p 8080:80 -v "$(pwd)/folder:/usr/share/nginx/html/:ro" nginx
 ```
 > -v: Lets us substitude a folder or a file in our docker container by the folder or file specified, we can also use virtual volumes in case we created them.
@@ -193,29 +191,29 @@ $ docker run --name desired-container-name -d -p 8080:80 -v "$(pwd)/folder:/usr/
 
 For this example is important that we don't create any folder.
 ```shell
-$ docker run -t -d -v "$(pwd)/newfolder/:/shared/:rw"  ubuntu:latest
+docker run -t -d -v "$(pwd)/newfolder/:/shared/:rw"  ubuntu:latest
 ```
 Now we need to get the Docker container id so we can connect to the container.
 
 ```shell
-$ docker container ls
+docker container ls
 ```
 Once we find the Docker id we need to connect to the container and attach the terminal
 
 ```shell
-$ docker container exec -it $CONTAINER_ID bash
+docker container exec -it $CONTAINER_ID bash
 ```
 Now that we are connected to the container, it's time to create a file in "/shared" 
 
 ```shell
-$ prtintf "Hi, file created from Docker container!" > /shared/newfile
+prtintf "Hi, file created from Docker container!" > /shared/newfile
 ```
 Once the file is created just left exit the container and check our new folder.
 
 ```shell
-$ exit
-$ ls ./newfolder
-$ cat ./newfolder/newfile
+exit
+ls ./newfolder
+cat ./newfolder/newfile
 ```
 
 As we can see, we didn't need to create the folder to share it, docker create it for us.
@@ -227,12 +225,15 @@ As we can see, we didn't need to create the folder to share it, docker create it
 
 ## docker-compose installation
 
+Follow the instructions located in the next website.
+
+https://docs.docker.com/compose/install/
 ## docker-compose first example (php apache web)
 
 First step is to create the file "docker-compose.yml" (the file can use ".yaml" instead of ".yml")
 
 ```shell
-    $ touch ./docker-compose.yml
+touch ./docker-compose.yml
 ```
 Once we have the file created we need to insert the next text inside the created file:
 
@@ -261,7 +262,7 @@ phpinfo();
 Once we have the files created, we can proceed to start the docker-container.
 
 ```shell
-$ docker-compose up
+docker-compose up
 ```
 
 To stop it we can simply press control+C
@@ -343,7 +344,7 @@ services:
 
 Once we created the compose file only left start it.
 ```shell
-$ docker-compose  -f docker-compose2.yml up
+docker-compose  -f docker-compose2.yml up
 ```
 
 
@@ -353,22 +354,20 @@ To test if it works you can open http://localhost:8080 and http://localhost:8081
 
 # docker stacks
 
-# other things to keep in mind
-
-## docker build
+# Docker custom images
 
 ## docker pull
 
 Docker pull let us download images to our system, so we don't have to download them later.
 
 ```shell
-$ docker pull nginx:1.18-alpine
+docker pull nginx:1.18-alpine
 ```
 
 Now if we list our downloaded images, we should be able to see it.
 
 ```shell
-$ docker images ls
+docker images ls
 ```
 
 [comment]: <> (## docker push)
@@ -396,12 +395,12 @@ RUN printf "hi from dockerfile" | tee /usr/share/nginx/html/index.html
 
 We can build a custom docker image from a docker file.
 
-```{r, engine='bash', count_lines}
-$ docker build -t my_image .
+```shell
+docker build -t my_image .
 ```
 We could do this instead.
-```{r, engine='bash', count_lines}
-$ docker build -t my_image . -f ./dockerfile
+```shell
+docker build -t my_image . -f ./dockerfile
 ```
 
 > -t: Let us specify the desired tag for the image
@@ -410,8 +409,8 @@ $ docker build -t my_image . -f ./dockerfile
 
 ### Run from builded images
 
-```{r, engine='bash', count_lines}
-$ docker run -p 8080:80 my_image
+```shell
+docker run -p 8080:80 my_image
 ```
 As we can see, we are calling it as any other image with "docker run".
 
