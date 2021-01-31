@@ -39,6 +39,12 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 Follow the instructions located in the next link.
 
+This one uses the official installation script:
+
+https://dev.to/rohansawant/installing-docker-and-docker-compose-on-the-raspberry-pi-in-5-simple-steps-3mgl
+
+or you can use this one instead:
+
 https://docs.docker.com/engine/install/ubuntu/
 
 ### Arch based distributions
