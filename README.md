@@ -1,25 +1,49 @@
----
-created: 2021-01-20T14:38:23+01:00
-modified: 2021-01-26T19:48:37+01:00
----
-
-# Docker_ASIX
+# Docker tutorial
 
 # Introduction
 
-Hi, this document is intended to help M**se and ASIX students.
+Hi, this document is intended to help System and Services Administration students, but this could be used for everybody 
+interested in learning Docker.
 
-## What is a docker?
+## What is Docker?
 
-A docker is a isolated*1 virtual machine.
+Docker is a software that allows the user for the creation, managing, and deployment of containers.
 
-*1 The docker is isolated by default unless it's specified in the configuration to not be isolated.
+
+
+[comment]: <> (Docker is used to create, deploy and manage containers, allowing the user to package applications into containers ???)
+
+**this could receive some help**
+
+## What is an image?
+
+An image it's a packaged software that will be used as a template when building (deploying) a container.
+
+Those images seek the optimization of size without loosing its functionalities, which usually results in files that only hundreds of MB (obviously it's size might vary of it's content).
+
+Also, as a side note, usually the distribution [Alpine](https://hub.docker.com/_/alpine) is used due it's lightweight, so might be interesting learning to use the command **apk** to install the packages.
+
+## What is a container?
+
+A container is built from a built image, using it as a base template.
+
+**this could receive some help**
+
+
+[comment]: <> (<img src="https://www.docker.com/sites/default/files/d8/styles/large/public/2018-11/container-what-is-container.png?itok=vle7kjDj"/>)
+
+## Okay but... what **differentiates** a container from a **virtual machine**?
+
+**this could receive some help**
 
 ## How dockers work?
+
+**this could receive some help**
 
 Dockers are preconfigured systems, usually supplying a single function or service (but not necessarily) and only with the packages necessaries to accomplish his commitments, the idea behind this is trying to use the minimum of resources as possibles, leaving more usable space.
 
 ## Why use dockers?
+
 
 As noted before, dockers are meant to be optimised and efficient trying to use the minimum recourses necessaries.
 
@@ -30,6 +54,7 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 *2 Each time the docker starts, it doesn't conserve any file from the past sessions, still, you can configure persistence specified files or folders (and specify if this ones can be modified), allowing you to use custom configuration and maintain the changes for the next session (ie. if you have a database, ftp server, mail server, etc.).
 
+**this could receive some help**
 
 # How to start
 
@@ -39,13 +64,13 @@ Also, since they are isolated virtual machines, in case someone was able to reac
 
 Follow the instructions located in the next link.
 
-This one uses the official installation script:
-
-https://dev.to/rohansawant/installing-docker-and-docker-compose-on-the-raspberry-pi-in-5-simple-steps-3mgl
-
-or you can use this one instead:
+In the official documentation:
 
 https://docs.docker.com/engine/install/ubuntu/
+
+Or you can use the installation script (intended for raspberry pi usage but usable in all linux distributions):
+https://dev.to/rohansawant/installing-docker-and-docker-compose-on-the-raspberry-pi-in-5-simple-steps-3mgl
+
 
 ### Arch based distributions
 
